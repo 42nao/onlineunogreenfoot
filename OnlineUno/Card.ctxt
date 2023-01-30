@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=Card
+comment1.params=card_image\ cardindex
+comment1.target=Card(greenfoot.GreenfootImage,\ java.lang.String)
+comment2.params=
+comment2.target=void\ act()
+numComments=3
