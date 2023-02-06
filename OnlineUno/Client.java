@@ -2,7 +2,7 @@ import java.io.*;
 import java.net.*;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
-
+import greenfoot.*;
 
 public class Client {
     
@@ -10,6 +10,7 @@ public class Client {
     private static Socket socket;
     private Thread listenerThread;
     public boolean running = true;
+
     
     
     public static void connect(String host, int port) throws IOException {
@@ -41,13 +42,12 @@ public class Client {
         
     }
     
-    public void listenForCardChange() throws IOException {
+    public void listenForCardChange(World world) throws IOException {
         listenerThread = new Thread() {
                 public void run() {
                     //Start Server
                     try {
                         while (running) {
-                
                             InputStream inputStream = socket.getInputStream();
                             ObjectInputStream hashmapInputStream = new ObjectInputStream(inputStream);
                             HashMap<String, Integer> cardMap;
@@ -55,6 +55,9 @@ public class Client {
                             {
                                 cardMap = (HashMap) hashmapInputStream.readObject();
                                 System.out.println("Client got Card. CARD:\n color: " + cardMap.get("colorindex") + "; number: " + cardMap.get("numberindex") + "; specialcard:" + cardMap.get("specialcard"));
+                                CardStack cs = world.getObjects(CardStack.class).get(0);
+                                
+                                cs.setCurrentCard(new Card(cardMap.get("colorindex"), cardMap.get("numberindex"), (cardMap.get("specialcard") == 1 ? true : false)));
                             }
                             catch (ClassNotFoundException cnfe)
                             {
@@ -66,10 +69,7 @@ public class Client {
                     }
                 }
         };
-        
-        
-        
-    
+        listenerThread.start();
     }
     
     

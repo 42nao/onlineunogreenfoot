@@ -39,13 +39,18 @@ public class UnoWorld extends World
     @Override
     public void stopped() {
         
-        try {
-            server.close();
-            serverthread.stop();
-            System.out.println(server.isRunning());
-        } catch (NullPointerException e) {
-            return;
+        serverthread.stop();
+        server.close();
+        try
+        {
+            client.getSocket().close();
         }
+        catch (IOException ioe)
+        {
+            ioe.printStackTrace();
+        }
+        System.out.println(server.isRunning());
+
         
     }
     

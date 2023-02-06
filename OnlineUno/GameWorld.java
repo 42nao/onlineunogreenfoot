@@ -30,6 +30,15 @@ public class GameWorld extends World
         this.addObject(cs, getWidth()/2 - 50, getHeight()/2);
         this.addObject(gcs, getWidth()/2 + 50, getHeight()/2);
         pca.generateStarterCards();
+        
+        try
+        {
+            client.listenForCardChange(this);
+        }
+        catch (java.io.IOException ioe)
+        {
+            ioe.printStackTrace();
+        }
     }
     
     
@@ -37,6 +46,14 @@ public class GameWorld extends World
     public void stopped() {
         serverthread.stop();
         server.close();
+        try
+        {
+            client.getSocket().close();
+        }
+        catch (java.io.IOException ioe)
+        {
+            ioe.printStackTrace();
+        }
         System.out.println(server.isRunning());
 
     }

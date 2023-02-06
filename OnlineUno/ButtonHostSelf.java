@@ -46,7 +46,17 @@ public class ButtonHostSelf extends Actor
             System.out.println("Der Server läuft jetzt über dein Gerät.\nDeine IP findest du mit Alt + Klick auf das WLAN Symbol auf deinem MacBook.");
             
         
-
+            try
+            {
+                world.getClient().connect("localhost", 7777);
+                Greenfoot.setWorld(new GameWorld(world.getServer(), world.getClient(), world.getServerThread()));
+                
+            }
+            catch (IOException | NullPointerException e)
+            {
+                System.out.println("FEHLER: Konnte nicht mit dem Host verbinden.");
+            }
+        
             
         }
     }    
