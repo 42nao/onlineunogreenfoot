@@ -1,17 +1,20 @@
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.Socket;
+import java.io.*;
+import java.net.*;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
+
 public class Client {
     
+
     private static Socket socket;
+    private Thread listenerThread;
+    public boolean running = true;
     
     
     public static void connect(String host, int port) throws IOException {
         socket = new Socket(host, port);
+        
         System.out.println("Connected!");
     }
     
@@ -36,6 +39,37 @@ public class Client {
         
         System.out.println("DEBUG: HashMap got send to Server");
         
+    }
+    
+    public void listenForCardChange() throws IOException {
+        listenerThread = new Thread() {
+                public void run() {
+                    //Start Server
+                    try {
+                        while (running) {
+                
+                            InputStream inputStream = socket.getInputStream();
+                            ObjectInputStream hashmapInputStream = new ObjectInputStream(inputStream);
+                            HashMap<String, Integer> cardMap;
+                            try
+                            {
+                                cardMap = (HashMap) hashmapInputStream.readObject();
+                                System.out.println("Client got Card. CARD:\n color: " + cardMap.get("colorindex") + "; number: " + cardMap.get("numberindex") + "; specialcard:" + cardMap.get("specialcard"));
+                            }
+                            catch (ClassNotFoundException cnfe)
+                            {
+                                cnfe.printStackTrace();
+                            }
+                        }
+                    } catch (IOException e) { 
+                        System.out.println("ClientSide Fehler | " + e);
+                    }
+                }
+        };
+        
+        
+        
+    
     }
     
     

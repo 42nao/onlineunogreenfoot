@@ -34,22 +34,15 @@ public class Server {
                 return;
             }
             
-            Socket socket = ss.accept(); // blocking call, this will wait until a connection is attempted on this port.
-            this.currentplayers += 1;
-            System.out.println("Connection from " + socket + "!");
+            //Socket socket = ss.accept(); // blocking call, this will wait until a connection is attempted on this port.
             
-            InputStream inputStream = socket.getInputStream();
-            ObjectInputStream hashmapInputStream = new ObjectInputStream(inputStream);
-            HashMap<String, Integer> cardMap;
-            try
-            {
-                cardMap = (HashMap) hashmapInputStream.readObject();
-                System.out.println("CARD INFO:\n color: " + cardMap.get("colorindex") + "; number: " + cardMap.get("numberindex") + "; specialcard:" + cardMap.get("specialcard"));
-            }
-            catch (ClassNotFoundException cnfe)
-            {
-                cnfe.printStackTrace();
-            }
+            new ClientHandler(ss.accept()).start();
+            
+            
+            
+            
+            this.currentplayers += 1;
+            
         }
 
 

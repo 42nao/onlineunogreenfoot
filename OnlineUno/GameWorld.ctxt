@@ -1,16 +1,10 @@
 #BlueJ class context
 comment0.target=GameWorld
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ GameWorld\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
-comment1.params=server\ client\ serverthread
-comment1.target=GameWorld(Server,\ Client,\ java.lang.Thread)
+comment0.text=\n\ Write\ a\ description\ of\ class\ GameWorld\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment1.params=
+comment1.target=void\ stopped()
 comment2.params=
-comment2.target=void\ stopped()
-comment3.params=
-comment3.target=Server\ getServer()
-comment4.params=
-comment4.target=java.lang.Thread\ getServerThread()
-comment5.params=thread
-comment5.target=void\ setServerThread(java.lang.Thread)
-comment6.params=
-comment6.target=Client\ getClient()
-numComments=7
+comment2.target=java.lang.Thread\ getServerThread()
+comment3.params=thread
+comment3.target=void\ setServerThread(java.lang.Thread)
+numComments=4
