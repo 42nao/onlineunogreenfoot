@@ -4,8 +4,6 @@ import java.util.HashMap;
 
 public class ClientHandler extends Thread {
     private Socket socket;
-    private PrintWriter out;
-    private BufferedReader in;
     private Server server;
     public boolean running = true;
 
@@ -17,7 +15,6 @@ public class ClientHandler extends Thread {
     public void run() {
         try {
                 System.out.println("Connection from " + socket + "!");
-                
                 while (running) {
                     InputStream inputStream = socket.getInputStream();
                     ObjectInputStream hashmapInputStream = new ObjectInputStream(inputStream);
@@ -26,8 +23,6 @@ public class ClientHandler extends Thread {
                     {
                         cardMap = (HashMap) hashmapInputStream.readObject();
                         System.out.println(socket.getLocalAddress() + ":" + socket.getLocalPort() + " -> CARD INFO:\n color: " + cardMap.get("colorindex") + "; number: " + cardMap.get("numberindex") + "; specialcard:" + cardMap.get("specialcard"));
-                        
-                        
                         for(Socket client : server.getClientList()) {
                             System.out.println(client.getPort());
                             try{
@@ -40,18 +35,14 @@ public class ClientHandler extends Thread {
                                 e.printStackTrace(); 
                             }
                         }
-                        
                     }
                     catch (ClassNotFoundException cnfe)
                     {
                         cnfe.printStackTrace();
                     }
                 }
-                
-                in.close();
-                out.close();
                 socket.close();
-            
+                
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,5 @@
 #BlueJ class context
 comment0.target=PlayerCardArray
-comment0.text=\n\ Write\ a\ description\ of\ class\ PlayerCardArray\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
 comment1.params=startercardamount
 comment1.target=PlayerCardArray(int)
 comment2.params=
@@ -9,4 +8,6 @@ comment3.params=
 comment3.target=void\ generateStarterCards()
 comment4.params=
 comment4.target=void\ disableAll()
-numComments=5
+comment5.params=
+comment5.target=Card\ getEnabledCard()
+numComments=6

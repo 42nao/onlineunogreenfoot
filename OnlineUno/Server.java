@@ -19,7 +19,6 @@ public class Server {
     private int maxplayers;
     private ArrayList<Socket> clientlist;
     
-
     public void launchServer(int players) throws IOException {
         this.maxplayers = players;
         this.currentplayers = 0;
@@ -29,8 +28,7 @@ public class Server {
         this.ss = new ServerSocket(7777);
         
         System.out.println("ServerSocket awaiting connections...");
-
-
+        
         while (running) {
 
             if(currentplayers > maxplayers) {
@@ -44,16 +42,10 @@ public class Server {
             this.currentplayers += 1;
             
         }
-
-
+        
         System.out.println("Closing sockets.");
         ss.close();
     }
-    
-    public boolean isRunning() {
-        return running;
-    }
-    
     
     public void close() {
         running = false;
@@ -65,7 +57,8 @@ public class Server {
         }
     }
     
-
+    public boolean isRunning() { return this.running; }
+    
     public ArrayList<Socket> getClientList() { return clientlist; }
 }
 

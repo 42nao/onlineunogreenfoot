@@ -14,9 +14,7 @@ public class GetterCardStack extends Actor
         setImage(img);
     }
     
+    public void act() {
     
-    public void act()
-    {
-        // Add your action code here.
     }
 }

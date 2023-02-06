@@ -2,22 +2,14 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-/**
- * 
- * Write a description of class ButtonHostSelf here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
+
 public class ButtonHostSelf extends Actor
 {
     
     public ButtonHostSelf() {
-        
         GreenfootImage img = new GreenfootImage("Host Game", 40, Color.WHITE, Color.GREEN);
         setImage(img);
     }
-    
     
     public void act() {
         if (Greenfoot.mouseClicked(this)) {
@@ -41,16 +33,14 @@ public class ButtonHostSelf extends Actor
                     }
                 }
             });
-            world.getServerThread().start();
             
+            world.getServerThread().start();
             System.out.println("Der Server läuft jetzt über dein Gerät.\nDeine IP findest du mit Alt + Klick auf das WLAN Symbol auf deinem MacBook.");
             
-        
             try
             {
                 world.getClient().connect("localhost", 7777);
                 Greenfoot.setWorld(new GameWorld(world.getServer(), world.getClient(), world.getServerThread()));
-                
             }
             catch (IOException | NullPointerException e)
             {

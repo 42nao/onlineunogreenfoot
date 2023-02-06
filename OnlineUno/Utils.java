@@ -1,15 +1,5 @@
-/**
- * Write a description of class Utils here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 public class Utils  
 {
-    
-    public Utils()
-    {
-    }
 
     public static int getRandomNumber(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
@@ -23,6 +13,5 @@ public class Utils
             _card = new Card(getRandomNumber(0, 4), getRandomNumber(0, 12), false);
         }
         return _card;
-        
     }
 }

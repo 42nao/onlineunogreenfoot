@@ -1,13 +1,9 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-/**
- * Write a description of class GameWorld here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
+
 public class GameWorld extends World
 {
+    
     private Server server;
     private Thread serverthread;
     private Client client;
@@ -19,18 +15,25 @@ public class GameWorld extends World
     {    
         super(800, 500, 1); 
         
+        //INIT ATTRIBUTES
         this.server = server;
         this.client = client;
         this.serverthread = serverthread;
+        this.pca = new PlayerCardArray(7);
+        this.cs = new CardStack();
+        this.gcs = new GetterCardStack();
         
-        pca = new PlayerCardArray(7);
-        cs = new CardStack();
-        gcs = new GetterCardStack();
+        
+        //ADD OBJECTS TO WORLD
         this.addObject(pca, -10, -10);
         this.addObject(cs, getWidth()/2 - 50, getHeight()/2);
         this.addObject(gcs, getWidth()/2 + 50, getHeight()/2);
+        
+        //GENERATE STARTER CARDS
         pca.generateStarterCards();
         
+        
+        //LISTENER FOR CARDSTACK CHANGES
         try
         {
             client.listenForCardChange(this);
@@ -54,25 +57,26 @@ public class GameWorld extends World
         {
             ioe.printStackTrace();
         }
-        System.out.println(server.isRunning());
-
+        System.out.println("closed");
     }
     
     
+    //GETTER
     public Server getServer() {
         return server;
     }
     
-    
     public Thread getServerThread() {
         return serverthread; 
     }
-    
-    public void setServerThread(Thread thread) {
-        serverthread = thread;
-    }
-    
+        
     public Client getClient() {
         return client;
     }
+    
+    //SETTER
+    public void setServerThread(Thread thread) {
+        serverthread = thread;
+    }
+
 }

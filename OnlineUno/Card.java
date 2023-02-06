@@ -10,9 +10,8 @@ public class Card extends Actor
     private boolean isEnabled;
     private Color color;
     
-    public Card(/*GreenfootImage card_image,*/ int cardcolorindex, int cardnumberindex, boolean specialcard) {
+    public Card(int cardcolorindex, int cardnumberindex, boolean specialcard) { 
         
-        //this.image = card_image;
         this.colorindex = cardcolorindex;
         this.numberindex = cardnumberindex;
         this.specialcard = specialcard;
@@ -35,6 +34,7 @@ public class Card extends Actor
         this.image.scale(50, 75);
         setImage(this.image);
     }
+    
     public void act()
     {
         if(Greenfoot.mouseClicked(this)) {
@@ -44,11 +44,6 @@ public class Card extends Actor
             setEnabled();
             
         }
-    }
-    
-    
-    public GreenfootImage getImage() {
-        return this.image;
     }
     
     public void setEnabled() {
@@ -70,13 +65,14 @@ public class Card extends Actor
         this.isEnabled = false;
     }
     
+    public int getColorIndex() { return this.colorindex; }
     
-    public int getColorIndex() { return colorindex; }
+    public int getNumberIndex() { return this.numberindex; }
     
-    public int getNumberIndex() { return numberindex; }
+    public boolean isSpecialCard() { return this.specialcard; }
     
-    public boolean isSpecialCard() { return specialcard; }
+    public boolean isEnabled() { return this.isEnabled; } 
     
-    public boolean isEnabled() { return isEnabled; } 
+    public GreenfootImage getImage() { return this.image; }
     
 }

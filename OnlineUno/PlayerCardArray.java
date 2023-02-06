@@ -1,11 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-/**
- * Write a description of class PlayerCardArray here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 public class PlayerCardArray extends Actor
 {
     private Card[] cards;
@@ -18,11 +12,7 @@ public class PlayerCardArray extends Actor
         setImage(new GreenfootImage(10, 10));
     }
     
-    
-    public void act()
-    {
-        
-    }
+    public void act() { }
     
     public void generateStarterCards() {
         for(int i = 0; i < startercardamount; i++) {
@@ -31,7 +21,6 @@ public class PlayerCardArray extends Actor
         }
     }
     
-    
     public void disableAll() {
         for(int i = 0; i < cards.length; i++) {
             if(cards[i] == null) return;
@@ -39,7 +28,6 @@ public class PlayerCardArray extends Actor
             cards[i].setDisabled();
         }
     }
-    
     
     public Card getEnabledCard() {
         for(int i = 0; i < cards.length; i++) {

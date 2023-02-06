@@ -5,17 +5,12 @@ import java.util.HashMap;
 import greenfoot.*;
 
 public class Client {
-    
-
     private static Socket socket;
     private Thread listenerThread;
     public boolean running = true;
 
-    
-    
-    public static void connect(String host, int port) throws IOException {
+    public void connect(String host, int port) throws IOException {
         socket = new Socket(host, port);
-        
         System.out.println("Connected!");
     }
     
@@ -44,39 +39,32 @@ public class Client {
     
     public void listenForCardChange(World world) throws IOException {
         listenerThread = new Thread() {
-                public void run() {
-                    //Start Server
-                    try {
-                        while (running) {
-                            InputStream inputStream = socket.getInputStream();
-                            ObjectInputStream hashmapInputStream = new ObjectInputStream(inputStream);
-                            HashMap<String, Integer> cardMap;
-                            try
-                            {
-                                cardMap = (HashMap) hashmapInputStream.readObject();
-                                System.out.println("Client got Card. CARD:\n color: " + cardMap.get("colorindex") + "; number: " + cardMap.get("numberindex") + "; specialcard:" + cardMap.get("specialcard"));
-                                CardStack cs = world.getObjects(CardStack.class).get(0);
-                                
-                                cs.setCurrentCard(new Card(cardMap.get("colorindex"), cardMap.get("numberindex"), (cardMap.get("specialcard") == 1 ? true : false)));
-                            }
-                            catch (ClassNotFoundException cnfe)
-                            {
-                                cnfe.printStackTrace();
-                            }
+            public void run() {
+                //Start Server
+                try {
+                    while (running) {
+                        InputStream inputStream = socket.getInputStream();
+                        ObjectInputStream hashmapInputStream = new ObjectInputStream(inputStream);
+                        HashMap<String, Integer> cardMap;
+                        try {
+                            cardMap = (HashMap) hashmapInputStream.readObject();
+                            System.out.println("Client got Card. CARD:\n color: " + cardMap.get("colorindex") + "; number: " + cardMap.get("numberindex") + "; specialcard:" + cardMap.get("specialcard"));
+                            CardStack cs = world.getObjects(CardStack.class).get(0); 
+                            cs.setCurrentCard(new Card(cardMap.get("colorindex"), cardMap.get("numberindex"), (cardMap.get("specialcard") == 1 ? true : false)));
+                        } catch (ClassNotFoundException cnfe) {
+                            cnfe.printStackTrace();
                         }
-                    } catch (IOException e) { 
-                        System.out.println("ClientSide Fehler | " + e);
                     }
+                } catch (IOException e) { 
+                    System.out.println("ClientSide Fehler | " + e);
                 }
+            }
         };
         listenerThread.start();
     }
     
-    
     public Socket getSocket() {
         return socket;
     }
-    
-    
     
 }
