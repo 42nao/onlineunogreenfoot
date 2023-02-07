@@ -1,3 +1,5 @@
+import java.util.stream.*;
+
 public class Utils  
 {
 
@@ -13,5 +15,9 @@ public class Utils
             _card = new Card(getRandomNumber(0, 4), getRandomNumber(0, 12), false);
         }
         return _card;
+    }
+    
+    public static int indexOf(char[] arr, char val) {
+        return IntStream.range(0, arr.length).filter(i -> arr[i] == val).findFirst().orElse(-1);
     }
 }

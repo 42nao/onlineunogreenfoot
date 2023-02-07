@@ -16,16 +16,34 @@ public class ClientHandler extends Thread {
         try {
                 System.out.println("Connection from " + socket + "!");
                 while (running) {
+                    System.out.println( server.getCurrentMoveSocket().getPort());                    
+                    if(socket != server.getCurrentMoveSocket()) {
+                        return;
+                    }
+                    
                     InputStream inputStream = socket.getInputStream();
                     ObjectInputStream hashmapInputStream = new ObjectInputStream(inputStream);
                     HashMap<String, Integer> cardMap;
                     try
                     {
+                        
+                        
                         cardMap = (HashMap) hashmapInputStream.readObject();
+                        int nextmove = server.getClientList().indexOf(socket) + 1;
+                        if(nextmove >= server.getClientList().size()) {
+                            nextmove = 0;
+                        }
+                        System.out.println(nextmove);
+                        server.setCurrentMoveSocket(server.getClientList().get(nextmove));
+                        
                         System.out.println(socket.getLocalAddress() + ":" + socket.getLocalPort() + " -> CARD INFO:\n color: " + cardMap.get("colorindex") + "; number: " + cardMap.get("numberindex") + "; specialcard:" + cardMap.get("specialcard"));
                         for(Socket client : server.getClientList()) {
-                            System.out.println(client.getPort());
-                            try{
+                            
+                            if(server.getCurrentMoveSocket() == client) {
+                                cardMap.put("yourturn", 1);
+                            }
+                            
+                            try {
                                 
                                 final OutputStream outputStream = client.getOutputStream();
                                 final ObjectOutputStream mapOutputStream = new ObjectOutputStream(outputStream);
@@ -40,6 +58,8 @@ public class ClientHandler extends Thread {
                     {
                         cnfe.printStackTrace();
                     }
+                    
+
                 }
                 socket.close();
                 

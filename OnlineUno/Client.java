@@ -51,6 +51,11 @@ public class Client {
                             System.out.println("Client got Card. CARD:\n color: " + cardMap.get("colorindex") + "; number: " + cardMap.get("numberindex") + "; specialcard:" + cardMap.get("specialcard"));
                             CardStack cs = world.getObjects(CardStack.class).get(0); 
                             cs.setCurrentCard(new Card(cardMap.get("colorindex"), cardMap.get("numberindex"), (cardMap.get("specialcard") == 1 ? true : false)));
+
+                            if(cardMap.get("yourturn") != null) {
+                                world.showText("Du bist an der Reihe!", world.getWidth()/2 , 100);
+                            }
+                            
                         } catch (ClassNotFoundException cnfe) {
                             cnfe.printStackTrace();
                         }

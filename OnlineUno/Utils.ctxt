@@ -4,4 +4,6 @@ comment1.params=min\ max
 comment1.target=int\ getRandomNumber(int,\ int)
 comment2.params=
 comment2.target=Card\ getRandomCard()
-numComments=3
+comment3.params=arr\ val
+comment3.target=int\ indexOf(char[],\ char)
+numComments=4
