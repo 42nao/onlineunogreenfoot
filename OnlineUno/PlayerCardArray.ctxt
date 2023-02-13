@@ -8,6 +8,4 @@ comment3.params=
 comment3.target=void\ generateStarterCards()
 comment4.params=
 comment4.target=void\ disableAll()
-comment5.params=
-comment5.target=Card\ getEnabledCard()
-numComments=6
+numComments=5
