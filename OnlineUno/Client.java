@@ -8,6 +8,7 @@ public class Client {
     private static Socket socket;
     private Thread listenerThread;
     public boolean running = true;
+    private boolean yourturn;
 
     public void connect(String host, int port) throws IOException {
         socket = new Socket(host, port);
@@ -24,6 +25,11 @@ public class Client {
     
             
     public void sendCardPlaced(Card card) throws IOException {
+        
+        if(!yourturn) {
+            return;
+        }
+        
         final HashMap<String, Integer> cardMap = new HashMap<String, Integer>(); 
         cardMap.put("colorindex", card.getColorIndex());
         cardMap.put("numberindex", card.getNumberIndex());
@@ -34,6 +40,7 @@ public class Client {
         mapOutputStream.writeObject(cardMap);
         
         System.out.println("DEBUG: HashMap got send to Server");
+        yourturn = false;
         
     }
     
@@ -55,6 +62,9 @@ public class Client {
 
                             if(cardMap.get("yourturn") != null) {
                                 world.showText("Du bist an der Reihe!", world.getWidth()/2 , 100);
+                                yourturn = true;
+                            } else {
+                              world.showText("Jemand anderes ist an der Reihe!", world.getWidth()/2 , 100);
                             }
                             
                         } catch (ClassNotFoundException cnfe) {

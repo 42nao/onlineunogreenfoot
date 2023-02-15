@@ -19,12 +19,14 @@ public class Server {
     private int maxplayers;
     private ArrayList<Socket> clientlist;
     private Socket currentmovesocket;
+    private int nextmove;
     
     public void launchServer(int players) throws IOException {
         this.maxplayers = players;
         this.currentplayers = 0;
         this.clientlist = new ArrayList<Socket>();
         this.ss = new ServerSocket(7777);
+        this.nextmove = 0;
         
         System.out.println("ServerSocket awaiting connections...");
         
@@ -90,7 +92,19 @@ public class Server {
     
     public ArrayList<Socket> getClientList() { return this.clientlist; }
     
-    public void setCurrentMoveSocket(Socket currentmovesocket) { this.currentmovesocket = currentmovesocket ; }
+    public int getNextMove() { return this.nextmove; }
+    
+    public void setCurrentMoveSocket(Socket currentmovesocket) { this.currentmovesocket = currentmovesocket; }
+
+    public void setNextMove(int nextmove) { this.nextmove = nextmove; }
+
+    public void addNextMove(int i) {
+        this.nextmove += i;
+        if(nextmove >= clientlist.size()) {
+            nextmove = 0;
+        }
+    }
+    
 }
 
 

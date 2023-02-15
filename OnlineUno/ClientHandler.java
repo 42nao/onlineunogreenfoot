@@ -20,20 +20,24 @@ public class ClientHandler extends Thread {
                     InputStream inputStream = socket.getInputStream();
                     ObjectInputStream hashmapInputStream = new ObjectInputStream(inputStream);
                     HashMap<String, Integer> cardMap;
-                    if(socket == server.getCurrentMoveSocket()) {
+                    if(true/*socket == server.getCurrentMoveSocket()*/) {
                         try
                         {
                             cardMap = (HashMap) hashmapInputStream.readObject();
-                            int nextmove = server.getClientList().indexOf(socket) + 1;
-                            if(nextmove >= server.getClientList().size()) {
-                                nextmove = 0;
-                            }
-                            System.out.println(nextmove);
-                            server.setCurrentMoveSocket(server.getClientList().get(nextmove));
+                            System.out.println("INDEX:" + server.getClientList().indexOf(socket));
+                            
+                            server.addNextMove(server.getClientList().indexOf(socket) + 1);
+                            
+                            System.out.println("next:" + server.getNextMove() + " | " + server.getClientList().size());
+                            server.setCurrentMoveSocket(server.getClientList().get(server.getNextMove()));
                             System.out.println(socket.getLocalAddress() + ":" + socket.getLocalPort() + " -> CARD INFO:\n color: " + cardMap.get("colorindex") + "; number: " + cardMap.get("numberindex") + "; specialcard:" + cardMap.get("specialcard"));
+                            
+                            System.out.println("CMS:" + server.getCurrentMoveSocket().getPort());
                             for(Socket client : server.getClientList()) {
+                                HashMap loopCardMap = cardMap;
                                 if(server.getCurrentMoveSocket() == client) {
-                                    cardMap.put("yourturn", 1);
+                                    loopCardMap.put("yourturn", 1);
+                                    System.out.println("tosend:" + loopCardMap.toString());
                                 }
                                 try {
                                     
@@ -50,7 +54,9 @@ public class ClientHandler extends Thread {
                         {
                             cnfe.printStackTrace();
                         }
-                        }
+                    } else {
+                        System.out.println("blocked");
+                    }
 
                 }
                 socket.close();

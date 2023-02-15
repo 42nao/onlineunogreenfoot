@@ -1,9 +1,15 @@
 #BlueJ class context
 comment0.target=GameWorld
-comment1.params=
-comment1.target=void\ stopped()
+comment1.params=server\ client\ serverthread
+comment1.target=GameWorld(Server,\ Client,\ java.lang.Thread)
 comment2.params=
-comment2.target=java.lang.Thread\ getServerThread()
-comment3.params=thread
-comment3.target=void\ setServerThread(java.lang.Thread)
-numComments=4
+comment2.target=void\ stopped()
+comment3.params=
+comment3.target=Server\ getServer()
+comment4.params=
+comment4.target=java.lang.Thread\ getServerThread()
+comment5.params=
+comment5.target=Client\ getClient()
+comment6.params=thread
+comment6.target=void\ setServerThread(java.lang.Thread)
+numComments=7

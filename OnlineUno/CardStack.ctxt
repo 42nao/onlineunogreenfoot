@@ -2,6 +2,8 @@
 comment0.target=CardStack
 comment1.params=
 comment1.target=CardStack()
-comment2.params=
-comment2.target=void\ act()
-numComments=3
+comment2.params=card
+comment2.target=void\ setCurrentCard(Card)
+comment3.params=
+comment3.target=void\ act()
+numComments=4
