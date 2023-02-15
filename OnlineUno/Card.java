@@ -65,6 +65,25 @@ public class Card extends Actor
         this.isEnabled = false;
     }
     
+    
+    public void changeColor(int colorindex) {           
+            if(colorindex == 0) {
+                color = Color.RED;
+            } else if(colorindex == 1) {
+                color = Color.YELLOW;
+            } else if(colorindex == 2) {
+                color = Color.GREEN;
+            } else {
+                color = Color.BLUE;
+            }
+     
+        this.specialcard = false;
+        this.image = new GreenfootImage("" + this.numberindex, 100, Color.WHITE, color);
+        this.image.scale(50, 75);
+        this.colorindex = colorindex;
+        setImage(this.image);
+    }
+    
     public int getColorIndex() { return this.colorindex; }
     
     public int getNumberIndex() { return this.numberindex; }

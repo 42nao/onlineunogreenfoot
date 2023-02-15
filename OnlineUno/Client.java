@@ -39,7 +39,7 @@ public class Client {
         final ObjectOutputStream mapOutputStream = new ObjectOutputStream(yourOutputStream);
         mapOutputStream.writeObject(cardMap);
         
-        System.out.println("DEBUG: HashMap got send to Server");
+        System.out.println("CLIENT: Die Karte wurde an den Server geschickt.");
         yourturn = false;
         
     }
@@ -55,8 +55,8 @@ public class Client {
                         HashMap<String, Integer> cardMap;
                         try {
                             cardMap = (HashMap) hashmapInputStream.readObject();
-                            System.out.println(cardMap.toString());
-                            System.out.println("Client got Card. CARD:\n color: " + cardMap.get("colorindex") + "; number: " + cardMap.get("numberindex") + "; specialcard:" + cardMap.get("specialcard"));
+                            //System.out.println(cardMap.toString());
+                            //System.out.println("Client got Card. CARD:\n color: " + cardMap.get("colorindex") + "; number: " + cardMap.get("numberindex") + "; specialcard:" + cardMap.get("specialcard"));
                             CardStack cs = world.getObjects(CardStack.class).get(0); 
                             cs.setCurrentCard(new Card(cardMap.get("colorindex"), cardMap.get("numberindex"), (cardMap.get("specialcard") == 1 ? true : false)));
 
@@ -82,5 +82,7 @@ public class Client {
     public Socket getSocket() {
         return socket;
     }
+    
+    public boolean isYourTurn() { return this.yourturn; }
     
 }

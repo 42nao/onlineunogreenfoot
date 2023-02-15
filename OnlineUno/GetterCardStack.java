@@ -15,6 +15,31 @@ public class GetterCardStack extends Actor
     }
     
     public void act() {
+        if(Greenfoot.mouseClicked(this)) {
+            PlayerCardArray pcatemp = getWorld().getObjects(PlayerCardArray.class).get(0);
+            GameWorld world = (GameWorld) getWorld();
+            
+            Card gcard = Utils.getRandomCard();
+            pcatemp.addCard(gcard);
+            
+            for(Card card : pcatemp.getCards()) {
+                
+                
+                if(card != null && !(card.getColorIndex() == world.getCardStack().getCard().getColorIndex() || card.getNumberIndex() == world.getCardStack().getCard().getNumberIndex() || card.isSpecialCard())) {
+            
+                    try
+                    {
+                        world.getClient().sendCardPlaced(world.getCardStack().getCard());
+                    }
+                    catch (java.io.IOException ioe)
+                    {
+                        ioe.printStackTrace();
+                    }
+                }
+            }
+            
+            
+        }
     
     }
 }

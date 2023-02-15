@@ -2,6 +2,10 @@
 comment0.target=Utils
 comment1.params=min\ max
 comment1.target=int\ getRandomNumber(int,\ int)
-comment2.params=arr\ val
-comment2.target=int\ indexOf(char[],\ char)
-numComments=3
+comment2.params=
+comment2.target=Card\ getRandomCard()
+comment3.params=arr\ val
+comment3.target=int\ indexOf(char[],\ char)
+comment4.params=oldcard\ newcard
+comment4.target=boolean\ checkCardAllowed(Card,\ Card)
+numComments=5

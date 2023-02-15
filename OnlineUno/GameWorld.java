@@ -74,6 +74,8 @@ public class GameWorld extends World
         return client;
     }
     
+    public CardStack getCardStack() { return this.cs; }
+    
     //SETTER
     public void setServerThread(Thread thread) {
         serverthread = thread;

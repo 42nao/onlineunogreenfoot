@@ -28,6 +28,9 @@ public class Server {
         this.ss = new ServerSocket(7777);
         this.nextmove = 0;
         
+        Card card = Utils.getRandomCard();
+
+        
         System.out.println("ServerSocket awaiting connections...");
         
         while (running) {
@@ -46,9 +49,6 @@ public class Server {
             }
             
             this.currentplayers += 1;
-            
-            Card card = Utils.getRandomCard();
-            
             
             for(Socket client : clientlist) {           
                 try {
@@ -99,7 +99,8 @@ public class Server {
     public void setNextMove(int nextmove) { this.nextmove = nextmove; }
 
     public void addNextMove(int i) {
-        this.nextmove += i;
+        this.nextmove = i;
+        System.out.println("CLIENTLISTSIZE:" + clientlist.size() + " | NEXTMOVE:" + nextmove);
         if(nextmove >= clientlist.size()) {
             nextmove = 0;
         }

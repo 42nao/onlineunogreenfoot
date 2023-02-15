@@ -20,4 +20,15 @@ public class Utils
     public static int indexOf(char[] arr, char val) {
         return IntStream.range(0, arr.length).filter(i -> arr[i] == val).findFirst().orElse(-1);
     }
+    
+    public static boolean checkCardAllowed(Card oldcard, Card newcard) {
+        if(newcard.isSpecialCard()) {
+            return true;
+        } else if(oldcard.getColorIndex() == newcard.getColorIndex()) {
+            return true;
+        } else if(oldcard.getNumberIndex() == newcard.getNumberIndex()) {
+            return true;
+        }
+        return false;
+    }
 }
