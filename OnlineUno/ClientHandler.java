@@ -14,43 +14,63 @@ public class ClientHandler extends Thread {
 
     public void run() {
         try {
-                System.out.println("Connection from " + socket + "!");
-                while (running) {                  
-                    InputStream inputStream = socket.getInputStream();
-                    ObjectInputStream hashmapInputStream = new ObjectInputStream(inputStream);
-                    HashMap<String, Integer> cardMap;
-                    try
-                    {
-                            cardMap = (HashMap) hashmapInputStream.readObject();
-                            System.out.println("INDEX:" + server.getClientList().indexOf(socket));
-                            server.addNextMove(server.getClientList().indexOf(socket) + 1);
-                            System.out.println("next:" + server.getNextMove() + " | " + server.getClientList().size());
-                            server.setCurrentMoveSocket(server.getClientList().get(server.getNextMove()));
-                            //System.out.println(socket.getLocalAddress() + ":" + socket.getLocalPort() + " -> CARD INFO:\n color: " + cardMap.get("colorindex") + "; number: " + cardMap.get("numberindex") + "; specialcard:" + cardMap.get("specialcard"));
-                            
-                            cardMap.remove("yourturn");
-                            for(Socket client : server.getClientList()) {
-                                HashMap loopCardMap = cardMap;
-                                loopCardMap.remove("yourturn");
-                                if(server.getCurrentMoveSocket() == client) {
-                                    loopCardMap.put("yourturn", 1);
-                                }
-                                try {
-                                    final OutputStream outputStream = client.getOutputStream();
-                                    final ObjectOutputStream mapOutputStream = new ObjectOutputStream(outputStream);
-                                    mapOutputStream.writeObject(loopCardMap);
-                                    
-                                } catch(IOException e){ 
-                                    e.printStackTrace(); 
-                                }
+            System.out.println("Connection from " + socket + "!");
+            while (running) {                  
+                InputStream inputStream = socket.getInputStream();
+                ObjectInputStream hashmapInputStream = new ObjectInputStream(inputStream);
+                HashMap<String, Integer> cardMap;
+                try {
+                    cardMap = (HashMap) hashmapInputStream.readObject();
+                    
+                    if(cardMap.get("won") != null && cardMap.get("won") == 1) {
+                        
+                        HashMap<String, Integer> wonMap = new HashMap<String, Integer>();
+                        wonMap.put("gameend", 1);
+                        wonMap.put("winner", 0);
+                        for(Socket client : server.getClientList()) {
+                            HashMap loopCardMap = wonMap;
+                            loopCardMap.remove("winner");
+                            if(socket == client) {
+                                 loopCardMap.put("winner", 1);
                             }
+                            try {
+                                final OutputStream outputStream = client.getOutputStream();
+                                final ObjectOutputStream mapOutputStream = new ObjectOutputStream(outputStream);
+                                mapOutputStream.writeObject(wonMap);
+                            } catch(IOException e){ 
+                                e.printStackTrace(); 
+                            }
+                        }
+                        
+                    } else {
+                        System.out.println("INDEX:" + server.getClientList().indexOf(socket));
+                        server.addNextMove(server.getClientList().indexOf(socket) + 1);
+                        System.out.println("next:" + server.getNextMove() + " | " + server.getClientList().size());
+                        server.setCurrentMoveSocket(server.getClientList().get(server.getNextMove())); 
+                        cardMap.remove("yourturn");
+                        for(Socket client : server.getClientList()) {
+                            HashMap loopCardMap = cardMap;
+                            loopCardMap.remove("yourturn");
+                            if(server.getCurrentMoveSocket() == client) {
+                                 loopCardMap.put("yourturn", 1);
+                            }
+                            try {
+                                final OutputStream outputStream = client.getOutputStream();
+                                final ObjectOutputStream mapOutputStream = new ObjectOutputStream(outputStream);
+                                mapOutputStream.writeObject(loopCardMap);
+                                        
+                            } catch(IOException e){ 
+                                e.printStackTrace(); 
+                            }
+                        }
                     }
-                    catch (ClassNotFoundException cnfe)
-                    {
-                        cnfe.printStackTrace();
-                    }
+                    
+                    
+                } catch (ClassNotFoundException cnfe) {
+                    cnfe.printStackTrace();
                 }
-                socket.close();
+            }
+            socket.close();
                
         } catch (IOException e) {
             e.printStackTrace();

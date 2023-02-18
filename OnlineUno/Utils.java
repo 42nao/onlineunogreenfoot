@@ -14,6 +14,7 @@ public class Utils
         } else {       
             _card = new Card(getRandomNumber(0, 4), getRandomNumber(0, 12), false);
         }
+        
         return _card;
     }
     

@@ -44,6 +44,18 @@ public class Client {
         
     }
     
+    public void sendPlayerWon() throws IOException {
+        final HashMap<String, Integer> map = new HashMap<String, Integer>(); 
+        map.put("won", 1);
+        
+        final OutputStream yourOutputStream = socket.getOutputStream();
+        final ObjectOutputStream mapOutputStream = new ObjectOutputStream(yourOutputStream);
+        mapOutputStream.writeObject(map);
+        
+        System.out.println("CLIENT: PlayerWon an Server gesendet");
+
+    }
+    
     public void listenForCardChange(World world) throws IOException {
         listenerThread = new Thread() {
             public void run() {
@@ -55,8 +67,18 @@ public class Client {
                         HashMap<String, Integer> cardMap;
                         try {
                             cardMap = (HashMap) hashmapInputStream.readObject();
-                            //System.out.println(cardMap.toString());
-                            //System.out.println("Client got Card. CARD:\n color: " + cardMap.get("colorindex") + "; number: " + cardMap.get("numberindex") + "; specialcard:" + cardMap.get("specialcard"));
+                            
+                            if(cardMap.get("gameend") != null && cardMap.get("gameend") == 1) {
+                                world.showText("Das Spiel ist vorbei.", world.getWidth()/2 , 100);
+                                System.out.println(cardMap.get("winner") + " | " + socket.getPort());
+                                if(cardMap.get("winner") != null && cardMap.get("winner") == 1) {
+                                    world.showText("Du hast gewonnen!", world.getWidth()/2 , 150);
+                                } else {
+                                    world.showText("Du hast verloren!", world.getWidth()/2 , 150);
+                                }
+                            }
+                            
+                            
                             CardStack cs = world.getObjects(CardStack.class).get(0); 
                             cs.setCurrentCard(new Card(cardMap.get("colorindex"), cardMap.get("numberindex"), (cardMap.get("specialcard") == 1 ? true : false)));
 

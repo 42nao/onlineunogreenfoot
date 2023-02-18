@@ -69,13 +69,24 @@ public class PlayerCardArray extends Actor
         
         int x = 0;
         for(Card loopcard : cards) {
-            x += 1;
+            if(loopcard != null) {
+                x += 1;
+            }
         }
         
         GameWorld world = (GameWorld) getWorld();
         
+        System.out.println("x:" + x);
         if(x == 0) {
-            world.showText("Du hast gewonnen!", world.getWidth()/2 , 150);
+            //world.showText("Du hast gewonnen!", world.getWidth()/2 , 150);
+            try
+            {
+                world.getClient().sendPlayerWon();
+            }
+            catch (java.io.IOException ioe)
+            {
+                ioe.printStackTrace();
+            }
             Greenfoot.stop();
         }
         
