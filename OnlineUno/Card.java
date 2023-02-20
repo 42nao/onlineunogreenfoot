@@ -16,21 +16,26 @@ public class Card extends Actor
         this.numberindex = cardnumberindex;
         this.specialcard = specialcard;
         
+        
         if(specialcard) {
             color = Color.BLACK;
+            this.image = new GreenfootImage("special.png");
         } else {           
             if(colorindex == 0) {
                 color = Color.RED;
+                this.image = new GreenfootImage("r" + numberindex + ".png");
             } else if(colorindex == 1) {
                 color = Color.YELLOW;
+                this.image = new GreenfootImage("g" + numberindex + ".png");
             } else if(colorindex == 2) {
                 color = Color.GREEN;
+                this.image = new GreenfootImage("gr" + numberindex + ".png");
             } else {
                 color = Color.BLUE;
+                this.image = new GreenfootImage("b" + numberindex + ".png");
             }
         }
 
-        this.image = new GreenfootImage("" + this.numberindex, 100, Color.WHITE, color);
         this.image.scale(50, 75);
         setImage(this.image);
     }
@@ -54,7 +59,20 @@ public class Card extends Actor
     }
     
     public void setEnabled() {
-        this.image = new GreenfootImage("" + this.numberindex, 100, Color.WHITE, color);
+        
+        if(specialcard) {
+            this.image = new GreenfootImage("special.png");
+        } else { 
+            if(colorindex == 0) {
+                this.image = new GreenfootImage("r" + numberindex + ".png");
+            } else if(colorindex == 1) {
+                this.image = new GreenfootImage("g" + numberindex + ".png");
+            } else if(colorindex == 2) {
+                this.image = new GreenfootImage("gr" + numberindex + ".png");
+            } else {
+                this.image = new GreenfootImage("b" + numberindex + ".png");
+            }
+        }
         this.image.scale(55, 80);
         this.image.setColor(Color.WHITE);
         this.image.drawRect(-1,0,55,80);
@@ -66,26 +84,45 @@ public class Card extends Actor
     
     public void setDisabled() {
         
-        this.image = new GreenfootImage("" + this.numberindex, 100, Color.WHITE, color);
+        if(specialcard) {
+            this.image = new GreenfootImage("special.png");
+        } else { 
+            if(colorindex == 0) {
+                this.image = new GreenfootImage("r" + numberindex + ".png");
+            } else if(colorindex == 1) {
+                this.image = new GreenfootImage("g" + numberindex + ".png");
+            } else if(colorindex == 2) {
+                this.image = new GreenfootImage("gr" + numberindex + ".png");
+            } else {
+                this.image = new GreenfootImage("b" + numberindex + ".png");
+            }
+        }
         this.image.scale(50, 75);
         setImage(this.image);
         this.isEnabled = false;
     }
     
     
-    public void changeColor(int colorindex) {           
+    public void changeColor(int colorindex) {  
+        
+        if(specialcard) {
+            this.image = new GreenfootImage("special.png");
+        } else { 
             if(colorindex == 0) {
                 color = Color.RED;
+                this.image = new GreenfootImage("r" + numberindex + ".png");
             } else if(colorindex == 1) {
                 color = Color.YELLOW;
+                this.image = new GreenfootImage("g" + numberindex + ".png");
             } else if(colorindex == 2) {
                 color = Color.GREEN;
+                this.image = new GreenfootImage("gr" + numberindex + ".png");
             } else {
                 color = Color.BLUE;
+                this.image = new GreenfootImage("b" + numberindex + ".png");
             }
-     
+        }     
         this.specialcard = false;
-        this.image = new GreenfootImage("" + this.numberindex, 100, Color.WHITE, color);
         this.image.scale(50, 75);
         this.colorindex = colorindex;
         setImage(this.image);

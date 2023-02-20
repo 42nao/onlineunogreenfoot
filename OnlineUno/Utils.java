@@ -12,7 +12,7 @@ public class Utils
         if(getRandomNumber(0, 10) == 3) {
             _card = new Card(0, getRandomNumber(0, 1), true);
         } else {       
-            _card = new Card(getRandomNumber(0, 4), getRandomNumber(0, 12), false);
+            _card = new Card(getRandomNumber(0, 4), getRandomNumber(0, 9), false);
         }
         
         return _card;
