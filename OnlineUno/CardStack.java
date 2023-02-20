@@ -20,6 +20,7 @@ public class CardStack extends Actor
         if(Greenfoot.mouseClicked(this)) {
             GameWorld world = (GameWorld) getWorld();
             
+            System.out.println(world.getClient().isYourTurn());
             if(!(world.getClient().isYourTurn())) {
                 System.out.println("Du bist nicht an der Reihe!");
                 return;

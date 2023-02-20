@@ -22,19 +22,37 @@ public class GetterCardStack extends Actor
             Card gcard = Utils.getRandomCard();
             pcatemp.addCard(gcard);
             
-            for(Card card : pcatemp.getCards()) {
-                
-                
-                if(card != null && !(card.getColorIndex() == world.getCardStack().getCard().getColorIndex() || card.getNumberIndex() == world.getCardStack().getCard().getNumberIndex() || card.isSpecialCard())) {
+            Card currentcard = world.getCardStack().getCard();
             
-                    try
-                    {
-                        world.getClient().sendCardPlaced(world.getCardStack().getCard());
+            boolean t = false;
+            
+            
+            for(Card card : pcatemp.getCards()) {
+                if(card != null) {
+                    if(card.isSpecialCard()) {
+                        t = true;
+                        break;
+                    } else {
+                        
+                        if(card.getColorIndex() == currentcard.getColorIndex()) {
+                            if(card.getNumberIndex() == currentcard.getNumberIndex()) {
+                                t = true;
+                                break;
+                            }
+                        }
                     }
-                    catch (java.io.IOException ioe)
-                    {
-                        ioe.printStackTrace();
-                    }
+                }
+            }
+            
+            
+            if(!t) {
+                try
+                {
+                    world.getClient().sendCardPlaced(world.getCardStack().getCard());
+                }
+                catch (java.io.IOException ioe)
+                {
+                    ioe.printStackTrace();
                 }
             }
             

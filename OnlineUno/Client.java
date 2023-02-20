@@ -8,7 +8,7 @@ public class Client {
     private static Socket socket;
     private Thread listenerThread;
     public boolean running = true;
-    private boolean yourturn;
+    private boolean yourturn = false;
 
     public void connect(String host, int port) throws IOException {
         socket = new Socket(host, port);
@@ -47,11 +47,9 @@ public class Client {
     public void sendPlayerWon() throws IOException {
         final HashMap<String, Integer> map = new HashMap<String, Integer>(); 
         map.put("won", 1);
-        
         final OutputStream yourOutputStream = socket.getOutputStream();
         final ObjectOutputStream mapOutputStream = new ObjectOutputStream(yourOutputStream);
         mapOutputStream.writeObject(map);
-        
         System.out.println("CLIENT: PlayerWon an Server gesendet");
 
     }
@@ -59,7 +57,6 @@ public class Client {
     public void listenForCardChange(World world) throws IOException {
         listenerThread = new Thread() {
             public void run() {
-                //Start Server
                 try {
                     while (running) {
                         InputStream inputStream = socket.getInputStream();
@@ -67,21 +64,19 @@ public class Client {
                         HashMap<String, Integer> cardMap;
                         try {
                             cardMap = (HashMap) hashmapInputStream.readObject();
-                            
                             if(cardMap.get("gameend") != null && cardMap.get("gameend") == 1) {
                                 world.showText("Das Spiel ist vorbei.", world.getWidth()/2 , 100);
-                                System.out.println(cardMap.get("winner") + " | " + socket.getPort());
                                 if(cardMap.get("winner") != null && cardMap.get("winner") == 1) {
                                     world.showText("Du hast gewonnen!", world.getWidth()/2 , 150);
                                 } else {
                                     world.showText("Du hast verloren!", world.getWidth()/2 , 150);
                                 }
+                                return;
                             }
-                            
                             
                             CardStack cs = world.getObjects(CardStack.class).get(0); 
                             cs.setCurrentCard(new Card(cardMap.get("colorindex"), cardMap.get("numberindex"), (cardMap.get("specialcard") == 1 ? true : false)));
-
+                            
                             if(cardMap.get("yourturn") != null) {
                                 world.showText("Du bist an der Reihe!", world.getWidth()/2 , 100);
                                 yourturn = true;

@@ -39,9 +39,16 @@ public class Card extends Actor
     {
         if(Greenfoot.mouseClicked(this)) {
         
-            PlayerCardArray pcatemp = getWorld().getObjects(PlayerCardArray.class).get(0);
-            pcatemp.disableAll();
-            setEnabled();
+            
+            if(isEnabled()) {
+                
+                setDisabled();
+            
+            } else {
+                PlayerCardArray pcatemp = getWorld().getObjects(PlayerCardArray.class).get(0);
+                pcatemp.disableAll();
+                setEnabled();
+            }
             
         }
     }

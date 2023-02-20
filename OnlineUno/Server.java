@@ -28,7 +28,7 @@ public class Server {
         this.ss = new ServerSocket(7777);
         this.nextmove = 0;
         
-        Card card = Utils.getRandomCard();
+        Card card = Utils.getRandomCardWithoutSpecial();
 
         
         System.out.println("ServerSocket awaiting connections...");
@@ -42,29 +42,31 @@ public class Server {
             Socket socket = ss.accept();
             clientlist.add(socket);
             new ClientHandler(socket, this).start();
-            System.out.println(clientlist.size());
             
             if(currentplayers == 0) {
                 currentmovesocket = socket;
             }
             
             this.currentplayers += 1;
+
+            
+            final HashMap<String, Integer> cardMap = new HashMap<String, Integer>(); 
+            cardMap.put("colorindex", card.getColorIndex());
+            cardMap.put("numberindex", card.getNumberIndex());
+            cardMap.put("specialcard", card.isSpecialCard() ? 1 : 0);
+            cardMap.remove("yourturn");
             
             for(Socket client : clientlist) {           
                 try {
-                    
-                    final HashMap<String, Integer> cardMap = new HashMap<String, Integer>(); 
-                    cardMap.put("colorindex", card.getColorIndex());
-                    cardMap.put("numberindex", card.getNumberIndex());
-                    cardMap.put("specialcard", card.isSpecialCard() ? 1 : 0);
+                    HashMap loopCardMap = cardMap;
+                    loopCardMap.remove("yourturn");     
                     if(currentmovesocket == client) {
-                        cardMap.put("yourturn", 1);
+                        loopCardMap.put("yourturn", 1);
                     }
-                    
-                    final OutputStream yourOutputStream = socket.getOutputStream();
+                    final OutputStream yourOutputStream = client.getOutputStream();
                     final ObjectOutputStream mapOutputStream = new ObjectOutputStream(yourOutputStream);
-                    mapOutputStream.writeObject(cardMap);
-                                
+                    mapOutputStream.writeObject(loopCardMap);
+                    
                 } catch(IOException e){ 
                     e.printStackTrace(); 
                 }
@@ -100,7 +102,6 @@ public class Server {
 
     public void addNextMove(int i) {
         this.nextmove = i;
-        System.out.println("CLIENTLISTSIZE:" + clientlist.size() + " | NEXTMOVE:" + nextmove);
         if(nextmove >= clientlist.size()) {
             nextmove = 0;
         }

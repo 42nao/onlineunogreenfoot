@@ -14,7 +14,7 @@ public class ClientHandler extends Thread {
 
     public void run() {
         try {
-            System.out.println("Connection from " + socket + "!");
+            System.out.println("Neue Verbindung: " + socket);
             while (running) {                  
                 InputStream inputStream = socket.getInputStream();
                 ObjectInputStream hashmapInputStream = new ObjectInputStream(inputStream);
@@ -43,10 +43,9 @@ public class ClientHandler extends Thread {
                         }
                         
                     } else {
-                        System.out.println("INDEX:" + server.getClientList().indexOf(socket));
                         server.addNextMove(server.getClientList().indexOf(socket) + 1);
-                        System.out.println("next:" + server.getNextMove() + " | " + server.getClientList().size());
                         server.setCurrentMoveSocket(server.getClientList().get(server.getNextMove())); 
+                        
                         cardMap.remove("yourturn");
                         for(Socket client : server.getClientList()) {
                             HashMap loopCardMap = cardMap;
