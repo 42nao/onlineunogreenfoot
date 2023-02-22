@@ -1,0 +1,21 @@
+#BlueJ class context
+comment0.target=Server
+comment1.params=players
+comment1.target=void\ launchServer(int)
+comment2.params=
+comment2.target=void\ close()
+comment3.params=
+comment3.target=boolean\ isRunning()
+comment4.params=
+comment4.target=java.net.Socket\ getCurrentMoveSocket()
+comment5.params=
+comment5.target=java.util.ArrayList\ getClientList()
+comment6.params=
+comment6.target=int\ getNextMove()
+comment7.params=currentmovesocket
+comment7.target=void\ setCurrentMoveSocket(java.net.Socket)
+comment8.params=nextmove
+comment8.target=void\ setNextMove(int)
+comment9.params=i
+comment9.target=void\ addNextMove(int)
+numComments=10

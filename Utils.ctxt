@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=Utils
+comment1.params=min\ max
+comment1.target=int\ getRandomNumber(int,\ int)
+comment2.params=
+comment2.target=Card\ getRandomCard()
+comment3.params=
+comment3.target=Card\ getRandomCardWithoutSpecial()
+comment4.params=arr\ val
+comment4.target=int\ indexOf(char[],\ char)
+comment5.params=oldcard\ newcard
+comment5.target=boolean\ checkCardAllowed(Card,\ Card)
+numComments=6
